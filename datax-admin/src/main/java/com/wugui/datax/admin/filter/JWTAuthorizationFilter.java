@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.Collections;
 
 /**
- * @author  jingwk on 2019/11/17
+ * @author jingwk on 2019/11/17
  */
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
@@ -51,14 +51,20 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         super.doFilterInternal(request, response, chain);
     }
 
-    // 这里从token中获取用户信息并新建一个token
+
+    /**
+     * 这里从token中获取用户信息并新建一个token
+     *
+     * @param tokenHeader
+     * @return
+     * @throws TokenIsExpiredException
+     */
     private UsernamePasswordAuthenticationToken getAuthentication(String tokenHeader) throws TokenIsExpiredException {
         String token = tokenHeader.replace(JwtTokenUtils.TOKEN_PREFIX, "");
         boolean expiration = JwtTokenUtils.isExpiration(token);
         if (expiration) {
             throw new TokenIsExpiredException("登录时间过长，请退出重新登录");
-        }
-        else {
+        } else {
             String username = JwtTokenUtils.getUsername(token);
             String role = JwtTokenUtils.getUserRole(token);
             if (username != null) {

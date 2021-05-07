@@ -44,10 +44,13 @@ public class UserController {
         int recordsTotal = jobUserMapper.pageListCount((current - 1) * size, size, username);
 
         // package result
-        Map<String, Object> maps = new HashMap<>();
-        maps.put("recordsTotal", recordsTotal);        // 总记录数
-        maps.put("recordsFiltered", recordsTotal);    // 过滤后的总记录数
-        maps.put("data", list);                    // 分页列表
+        Map<String, Object> maps = new HashMap<>(3);
+        // 总记录数
+        maps.put("recordsTotal", recordsTotal);
+        // 过滤后的总记录数
+        maps.put("recordsFiltered", recordsTotal);
+        // 分页列表
+        maps.put("data", list);
         return new ReturnT<>(maps);
     }
 
